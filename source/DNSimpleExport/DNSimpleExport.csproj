@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Exporter.cs" />
     <Compile Include="Models\Zone.cs" />
+    <Compile Include="Models\ZoneRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
