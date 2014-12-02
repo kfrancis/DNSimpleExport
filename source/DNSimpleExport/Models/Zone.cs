@@ -16,6 +16,17 @@ namespace DNSimpleExport.Models
 
         [JsonProperty("records")]
         public List<ZoneRecord> Records { get; set; }
+        public bool ShouldSerializeRecords()
+        {
+            if (Records == null || Records.Count == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         #endregion
 
         #region Constructor

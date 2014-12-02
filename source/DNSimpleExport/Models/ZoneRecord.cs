@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using System;
 
 namespace DNSimpleExport.Models
 {
@@ -7,19 +8,19 @@ namespace DNSimpleExport.Models
     /// </summary>
     public class ZoneRecord
     {
-        [JsonProperty("name", Required = Required.Always)]
+        [JsonProperty("name", Required = Required.Always, NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
 
-        [JsonProperty("type", Required = Required.Always)]
+        [JsonProperty("type", Required = Required.Always, NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; set; }
 
-        [JsonProperty("content", Required = Required.Always)]
+        [JsonProperty("content", Required = Required.Always, NullValueHandling = NullValueHandling.Ignore)]
         public string Content { get; set; }
 
-        [JsonProperty("ttl", Required = Required.Always)]
-        public int TTL { get; set; }
+        [JsonProperty("ttl", Required = Required.Always, NullValueHandling = NullValueHandling.Ignore)]
+        public long? TTL { get; set; }
 
-        [JsonProperty("prio")]
-        public int Priority { get; set; }
+        [JsonProperty("prio", NullValueHandling = NullValueHandling.Ignore)]
+        public long? Priority { get; set; }
     }
 }

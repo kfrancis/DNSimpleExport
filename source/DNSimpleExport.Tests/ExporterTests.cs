@@ -66,7 +66,8 @@ namespace DNSimpleExport.Tests
             Exporter exporter = new Exporter();
 
             // Act
-            var result = exporter.GetAllZones("", "");
+            var result = exporter.GetAllZones("username", "password");
+            TestContext.WriteLine(result);
 
             // Assert
             Assert.IsNotNull(result);
@@ -74,6 +75,11 @@ namespace DNSimpleExport.Tests
             Assert.IsTrue(IsValidJSON(result));
         }
 
+        /// <summary>
+        /// Is the json valid (can it be parsed?)
+        /// </summary>
+        /// <param name="json">The json to be tested</param>
+        /// <returns>True if the json can be parsed without exception, false otherwise.</returns>
         private bool IsValidJSON(string json)
         {
             bool retVal = true;

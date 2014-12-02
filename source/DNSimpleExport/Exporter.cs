@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using DNSimple;
 using DNSimpleExport.Models;
@@ -25,16 +26,43 @@ namespace DNSimpleExport
             dynamic result = dns.ListDomains();
 
             List<Zone> zones = new List<Zone>();
-            foreach (var domain in result)
+            foreach (var resultItem in result)
             {
-                var newZone = new Zone() { Name = domain.name };
+                if (resultItem.domain != null)
+                {
+                    var domain = resultItem.domain;
+                    var newZone = new Zone() { Name = domain.name };
 
-                // TODO: Add records for this zone
+                    dynamic domainResult = dns.ListRecords(domain.name);
 
-                zones.Add(newZone);
+                    foreach (var domainResultItem in domainResult)
+                    {
+                        if (HasAttr(domainResultItem, "record"))
+                        {
+                            var record = domainResultItem.record;
+
+                            ZoneRecord newRecord = new ZoneRecord() {
+                                Name = HasAttr(record, "name") ? record.name : string.Empty,
+                                Type = HasAttr(record, "record_type") ? record.record_type : string.Empty,
+                                Content = HasAttr(record, "content") ? record.content : string.Empty,
+                                TTL = HasAttr(record, "ttl") ? record.ttl : string.Empty,
+                                Priority = HasAttr(record, "prio") ? record.prio : null
+                            };
+
+                            newZone.Records.Add(newRecord);
+                        }
+                    }
+
+                    zones.Add(newZone);
+                }
             }
 
             return JsonConvert.SerializeObject(zones, Formatting.Indented);
+        }
+
+        private bool HasAttr(ExpandoObject expando, string key)
+        {
+            return ((IDictionary<string, Object>) expando).ContainsKey(key);
         }
     }
 }

@@ -55,7 +55,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="ExporterTests.cs" />
-    <Compile Include="ZoneTests.cs" />
+    <Compile Include="JsonTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
